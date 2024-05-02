@@ -1,16 +1,13 @@
-# Определяем компилятор и флаги 
 CC=gcc
 CFLAGS=-Wall -Wextra -Werror -O3
 
-# Название файла
-TARGET=lab11vslN3245
+all: main plugin
 
-# Цель 
-all: clean $(TARGET)
+main: main.c
+    $(CC) $(CFLAGS) -o $@ $^ -ldl
 
-$(TARGET): lab11vslN3245.c
-	$(CC) $(CFLAGS) lab11vslN3245.c -o $(TARGET)
+plugin: plugin.c
+    $(CC) $(CFLAGS) -shared -fPIC -o $@.so $^
 
-# Цель для очистки проекта 
 clean:
-	rm -f $(TARGET)
+    rm -f main plugin.so
