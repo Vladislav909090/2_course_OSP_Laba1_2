@@ -1,13 +1,19 @@
 CC=gcc
-CFLAGS=-Wall -Wextra -Werror -O3
+# CFLAGS=-Wall -Wextra -Werror -O2 
+LDFLAGS=-ldl -lm
 
-all: main plugin
+.PHONY: all clean
 
-main: main.c
-    $(CC) $(CFLAGS) -o $@ $^ -ldl
+# Имена целевых файлов
+TARGETS=lab1vslN3245 libvslN3245.so
 
-plugin: plugin.c
-    $(CC) $(CFLAGS) -shared -fPIC -o $@.so $^
+all: $(TARGETS)
+
+lab1vslN3245: lab1vslN3245.c plugin_api.h
+	$(CC) $(CFLAGS) -o $@ lab1vslN3245.c $(LDFLAGS)
+
+libvslN3245.so: libvslN3245.c plugin_api.h
+	$(CC) $(CFLAGS) -shared -fPIC -o $@ libvslN3245.c $(LDFLAGS)
 
 clean:
-    rm -f main plugin.so
+	rm -f $(TARGETS) *.o *.so

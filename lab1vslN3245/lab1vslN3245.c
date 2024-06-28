@@ -9,7 +9,7 @@
 
 int main(int argc, char *argv[]) {
     if (argc < 2) {
-        fprintf(stderr, "Usage: %s [options] /path/to/file\n", argv[0]);
+        fprintf(stderr, "Usage: %s [-P /path/to/dir_with_plugins] [options] /path/to/file_to_search\n", argv[0]);
         exit(EXIT_FAILURE);
     }
 
@@ -28,8 +28,8 @@ int main(int argc, char *argv[]) {
         while ((entry = readdir(dir)) != NULL) {
         if (strstr(entry->d_name, ".so")) {
             char lib_path[1024];
-            snprintf(lib_path, sizeof(lib_path), "%s/%s", current_dir, entry->d_name);
-            void *dl = dlopen(lib_path, RTLD_LAZY);
+            snprintf(lib_path, sizeof(lib_path), "%s/%s", current_dir, entry->d_name); // строка полного пути до каждого файла
+            void *dl = dlopen(lib_path, RTLD_LAZY); // попытка открытия файлов
             if (!dl) {
                 fprintf(stderr, "ERROR: dlopen() failed for %s: %s\n", lib_path, dlerror());
                 continue;

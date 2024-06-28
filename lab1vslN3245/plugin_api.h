@@ -2,6 +2,7 @@
 #define PLUGIN_API_H
 
 #include <getopt.h>
+#include <stddef.h>
 
 // Структура для описания опций плагина
 struct plugin_option {
